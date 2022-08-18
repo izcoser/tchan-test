@@ -2,7 +2,7 @@ console.log('Beginning automated tests with JavaScript disabled.');
 
 const puppeteer = require('puppeteer');
 
-(async () => {
+async () => {
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
     await page.setJavaScriptEnabled(false);
@@ -19,4 +19,16 @@ const puppeteer = require('puppeteer');
     await page.click('input[id=postButton]');
     //await page.screenshot({path: 'example.png'});
     await browser.close();
-})();
+};
+
+async function downloadMedia(thread){
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(thread);
+    const elements = await page.evaluate(() => Array.from(document.querySelectorAll('a[class="imgLink"]'), element => element.href));
+ 
+    console.log(elements);
+    elements.map((i) => console.log(i));
+    await browser.close();
+}
+
